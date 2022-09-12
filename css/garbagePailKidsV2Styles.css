@@ -1,0 +1,33 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  /* object-fit: cover; */
+}
+
+.header {
+  width: 100%;
+  height: 10%;
+  max-height: 10%;
+  background-color: green;
+}
+
+.middle {
+  width: 100%;
+  height: 500px;
+  /* max-height: 70%;
+  min-height: 70%; */
+  background-color: orange;
+}
+
+.footer {
+  width: 100%;
+  height: 20%;
+  max-height: 20%;
+  background-color: indigo;
+}
