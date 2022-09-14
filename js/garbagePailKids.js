@@ -22,6 +22,10 @@ function setCardSrc() {
   card.src = basePath + cardNumber + cardType + fileType;
 }
 
+function setMaxHeight(maxHeight) {
+  card.style.maxHeight = maxHeight;
+}
+
 previous.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 1) {
@@ -30,18 +34,18 @@ previous.addEventListener("click", (e) => {
   cardType = "a";
   fileType = ".jpg";
   setCardSrc();
-  card.style.maxHeight = "75vh";
+  setMaxHeight("75vh");
 });
 
 next.addEventListener("click", (e) => {
   checkTransform();
-  if (cardNumber != 41) {
+  if (cardNumber != 83) {
     cardNumber++;
   }
   cardType = "a";
   fileType = ".jpg";
   setCardSrc();
-  card.style.maxHeight = "75vh";
+  setMaxHeight("75vh");
 });
 
 aVersion.addEventListener("click", (e) => {
@@ -49,7 +53,7 @@ aVersion.addEventListener("click", (e) => {
   cardType = "a";
   fileType = ".jpg";
   setCardSrc();
-  card.style.maxHeight = "75vh";
+  setMaxHeight("75vh");
 });
 
 bVersion.addEventListener("click", (e) => {
@@ -57,7 +61,7 @@ bVersion.addEventListener("click", (e) => {
   cardType = "b";
   fileType = ".jpg";
   setCardSrc();
-  card.style.maxHeight = "75vh";
+  setMaxHeight("75vh");
 });
 
 sketch.addEventListener("click", (e) => {
@@ -65,15 +69,21 @@ sketch.addEventListener("click", (e) => {
   cardType = "a";
   fileType = ".gif";
   setCardSrc();
-  card.style.maxHeight = "75vh";
+  setMaxHeight("75vh");
 });
 
 holographic.addEventListener("click", (e) => {
   checkTransform();
-  cardType = "b";
-  fileType = ".gif";
+  if (cardNumber <= 41) {
+    cardType = "b";
+    fileType = ".gif";
+  } else {
+    cardType = "r";
+    fileType = ".jpg";
+  }
+
   setCardSrc();
-  card.style.maxHeight = "75vh";
+  setMaxHeight("75vh");
 });
 
 back.addEventListener("click", (e) => {
@@ -81,16 +91,18 @@ back.addEventListener("click", (e) => {
   cardType = "";
   fileType = ".jpg";
   setCardSrc();
-  card.style.transform = "rotate(90deg)";
-  if (!screen.orientation.type.includes("landscape")) {
-    card.style.maxHeight = "45vh";
+  if (cardNumber <= 41) {
+    card.style.transform = "rotate(90deg)";
+    if (!screen.orientation.type.includes("landscape")) {
+      setMaxHeight("45vh");
+    }
   }
 });
 
 screen.orientation.addEventListener("change", function (e) {
   if (screen.orientation.type.includes("landscape")) {
-    card.style.maxHeight = "75vh";
+    setMaxHeight("75vh");
   } else if (card.style.transform === "rotate(90deg)") {
-    card.style.maxHeight = "45vh";
+    setMaxHeight("45vh");
   }
 });
