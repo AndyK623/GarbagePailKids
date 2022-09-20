@@ -56,6 +56,15 @@ previous.addEventListener("mouseup", (e) => {
   clickTime = mouseUp - mouseDown;
 });
 
+previous.addEventListener("touchstart", (e) => {
+  mouseDown = new Date();
+});
+
+previous.addEventListener("touchend", (e) => {
+  mouseUp = new Date();
+  clickTime = mouseUp - mouseDown;
+});
+
 next.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 83) {
@@ -79,6 +88,15 @@ next.addEventListener("mousedown", (e) => {
 });
 
 next.addEventListener("mouseup", (e) => {
+  mouseUp = new Date();
+  clickTime = mouseUp - mouseDown;
+});
+
+next.addEventListener("touchstart", (e) => {
+  mouseDown = new Date();
+});
+
+next.addEventListener("touchend", (e) => {
   mouseUp = new Date();
   clickTime = mouseUp - mouseDown;
 });
