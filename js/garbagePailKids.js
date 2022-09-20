@@ -11,6 +11,9 @@ var cardNumber = 1;
 var cardType = "a";
 var fileType = ".jpg";
 const basePath = "img/";
+var mouseDown;
+var mouseUp;
+var clickTime;
 
 function checkTransform() {
   if (card.style.transform === "rotate(90deg)") {
@@ -29,7 +32,14 @@ function setMaxHeight(maxHeight) {
 previous.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 1) {
-    cardNumber--;
+    if (clickTime > 500) {
+      cardNumber = cardNumber - 10;
+      if (cardNumber < 1) {
+        cardNumber = 1;
+      }
+    } else {
+      cardNumber--;
+    }
   }
   cardType = "a";
   fileType = ".jpg";
@@ -37,15 +47,40 @@ previous.addEventListener("click", (e) => {
   setMaxHeight("75vh");
 });
 
+previous.addEventListener("mousedown", (e) => {
+  mouseDown = new Date();
+});
+
+previous.addEventListener("mouseup", (e) => {
+  mouseUp = new Date();
+  clickTime = mouseUp - mouseDown;
+});
+
 next.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 83) {
-    cardNumber++;
+    if (clickTime > 500) {
+      cardNumber = cardNumber + 10;
+      if (cardNumber > 83) {
+        cardNumber = 83;
+      }
+    } else {
+      cardNumber++;
+    }
   }
   cardType = "a";
   fileType = ".jpg";
   setCardSrc();
   setMaxHeight("75vh");
+});
+
+next.addEventListener("mousedown", (e) => {
+  mouseDown = new Date();
+});
+
+next.addEventListener("mouseup", (e) => {
+  mouseUp = new Date();
+  clickTime = mouseUp - mouseDown;
 });
 
 aVersion.addEventListener("click", (e) => {
