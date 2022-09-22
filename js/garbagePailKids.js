@@ -11,9 +11,11 @@ var cardNumber = 1;
 var cardType = "a";
 var fileType = ".jpg";
 const basePath = "img/";
-var mouseDown;
-var mouseUp;
-var clickTime;
+
+var tapped = false;
+var firstTap;
+var secondTap;
+var tapTime = 200;
 
 function checkTransform() {
   if (card.style.transform === "rotate(90deg)") {
@@ -29,16 +31,33 @@ function setMaxHeight(maxHeight) {
   card.style.maxHeight = maxHeight;
 }
 
+function addTen(cardNumber) {
+  var result = cardNumber + 10;
+
+  if (result > 83) {
+    return 83;
+  }
+
+  return result;
+}
+
+function substractTen(cardNumber) {
+  var result = cardNumber - 10;
+
+  if (result < 1) {
+    return 1;
+  }
+
+  return result;
+}
+
 previous.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 1) {
-    if (clickTime > 500) {
-      cardNumber = cardNumber - 10;
-      if (cardNumber < 1) {
-        cardNumber = 1;
-      }
-    } else {
+    if (tapTime > 200) {
       cardNumber--;
+    } else {
+      cardNumber = substractTen(cardNumber);
     }
   }
   cardType = "a";
@@ -47,34 +66,36 @@ previous.addEventListener("click", (e) => {
   setMaxHeight("75vh");
 });
 
-previous.addEventListener("mousedown", (e) => {
-  mouseDown = new Date();
-});
-
-previous.addEventListener("mouseup", (e) => {
-  mouseUp = new Date();
-  clickTime = mouseUp - mouseDown;
+previous.addEventListener("dblclick", (e) => {
+  checkTransform();
+  if (cardNumber != 1) {
+    cardNumber = substractTen(cardNumber);
+  }
+  cardType = "a";
+  fileType = ".jpg";
+  setCardSrc();
+  setMaxHeight("75vh");
 });
 
 previous.addEventListener("touchstart", (e) => {
-  mouseDown = new Date();
-});
-
-previous.addEventListener("touchend", (e) => {
-  mouseUp = new Date();
-  clickTime = mouseUp - mouseDown;
+  if (!tapped) {
+    tapTime = 201;
+    tapped = true;
+    firstTap = new Date();
+  } else {
+    secondTap = new Date();
+    tapTime = secondTap - firstTap;
+    tapped = false;
+  }
 });
 
 next.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 83) {
-    if (clickTime > 500) {
-      cardNumber = cardNumber + 10;
-      if (cardNumber > 83) {
-        cardNumber = 83;
-      }
-    } else {
+    if (tapTime >= 200) {
       cardNumber++;
+    } else {
+      cardNumber = addTen(cardNumber);
     }
   }
   cardType = "a";
@@ -83,22 +104,27 @@ next.addEventListener("click", (e) => {
   setMaxHeight("75vh");
 });
 
-next.addEventListener("mousedown", (e) => {
-  mouseDown = new Date();
-});
-
-next.addEventListener("mouseup", (e) => {
-  mouseUp = new Date();
-  clickTime = mouseUp - mouseDown;
+next.addEventListener("dblclick", (e) => {
+  checkTransform();
+  if (cardNumber != 83) {
+    cardNumber = addTen(cardNumber);
+  }
+  cardType = "a";
+  fileType = ".jpg";
+  setCardSrc();
+  setMaxHeight("75vh");
 });
 
 next.addEventListener("touchstart", (e) => {
-  mouseDown = new Date();
-});
-
-next.addEventListener("touchend", (e) => {
-  mouseUp = new Date();
-  clickTime = mouseUp - mouseDown;
+  if (!tapped) {
+    tapTime = 201;
+    tapped = true;
+    firstTap = new Date();
+  } else {
+    secondTap = new Date();
+    tapTime = secondTap - firstTap;
+    tapped = false;
+  }
 });
 
 aVersion.addEventListener("click", (e) => {
