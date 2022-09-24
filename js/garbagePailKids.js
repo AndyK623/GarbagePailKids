@@ -1,3 +1,5 @@
+const isTouchDevice = "ontouchstart" in document.documentElement;
+
 var card = document.getElementById("card");
 var next = document.getElementById("next");
 var previous = document.getElementById("previous");
@@ -12,10 +14,15 @@ var cardType = "a";
 var fileType = ".jpg";
 const basePath = "img/";
 
-var tapped = false;
-var firstTap;
-var secondTap;
-var tapTime = 200;
+var tappedPrevious = false;
+var firstTapPrevious;
+var secondTapPrevious;
+var tapTimePrevious = 400;
+
+var tappedNext = false;
+var firstTapNext;
+var secondTapNext;
+var tapTimeNext = 400;
 
 function checkTransform() {
   if (card.style.transform === "rotate(90deg)") {
@@ -54,22 +61,12 @@ function substractTen(cardNumber) {
 previous.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 1) {
-    if (tapTime > 200) {
-      cardNumber--;
-    } else {
-      cardNumber = substractTen(cardNumber);
+    if (!isTouchDevice) {
+      e.ctrlKey ? (cardNumber = substractTen(cardNumber)) : cardNumber--;
     }
-  }
-  cardType = "a";
-  fileType = ".jpg";
-  setCardSrc();
-  setMaxHeight("75vh");
-});
-
-previous.addEventListener("dblclick", (e) => {
-  checkTransform();
-  if (cardNumber != 1) {
-    cardNumber = substractTen(cardNumber);
+    tapTimePrevious < 400
+      ? (cardNumber = substractTen(cardNumber))
+      : cardNumber--;
   }
   cardType = "a";
   fileType = ".jpg";
@@ -78,36 +75,24 @@ previous.addEventListener("dblclick", (e) => {
 });
 
 previous.addEventListener("touchstart", (e) => {
-  if (!tapped) {
-    tapTime = 201;
-    tapped = true;
-    firstTap = new Date();
+  if (!tappedPrevious) {
+    tapTimePrevious = 401;
+    tappedPrevious = true;
+    firstTapPrevious = new Date();
   } else {
-    secondTap = new Date();
-    tapTime = secondTap - firstTap;
-    tapped = false;
+    secondTapPrevious = new Date();
+    tapTimePrevious = secondTapPrevious - firstTapPrevious;
+    tappedPrevious = false;
   }
 });
 
 next.addEventListener("click", (e) => {
   checkTransform();
   if (cardNumber != 83) {
-    if (tapTime >= 200) {
-      cardNumber++;
-    } else {
-      cardNumber = addTen(cardNumber);
+    if (!isTouchDevice) {
+      e.ctrlKey ? (cardNumber = addTen(cardNumber)) : cardNumber++;
     }
-  }
-  cardType = "a";
-  fileType = ".jpg";
-  setCardSrc();
-  setMaxHeight("75vh");
-});
-
-next.addEventListener("dblclick", (e) => {
-  checkTransform();
-  if (cardNumber != 83) {
-    cardNumber = addTen(cardNumber);
+    tapTimeNext < 400 ? (cardNumber = addTen(cardNumber)) : cardNumber++;
   }
   cardType = "a";
   fileType = ".jpg";
@@ -116,14 +101,14 @@ next.addEventListener("dblclick", (e) => {
 });
 
 next.addEventListener("touchstart", (e) => {
-  if (!tapped) {
-    tapTime = 201;
-    tapped = true;
-    firstTap = new Date();
+  if (!tappedNext) {
+    tapTimeNext = 401;
+    tappedNext = true;
+    firstTapNext = new Date();
   } else {
-    secondTap = new Date();
-    tapTime = secondTap - firstTap;
-    tapped = false;
+    secondTapNext = new Date();
+    tapTimeNext = secondTapNext - firstTapNext;
+    tappedNext = false;
   }
 });
 
