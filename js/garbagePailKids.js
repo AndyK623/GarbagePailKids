@@ -63,10 +63,11 @@ previous.addEventListener("click", (e) => {
   if (cardNumber != 1) {
     if (!isTouchDevice) {
       e.ctrlKey ? (cardNumber = substractTen(cardNumber)) : cardNumber--;
+    } else {
+      tapTimePrevious < 400
+        ? (cardNumber = substractTen(cardNumber))
+        : cardNumber--;
     }
-    tapTimePrevious < 400
-      ? (cardNumber = substractTen(cardNumber))
-      : cardNumber--;
   }
   cardType = "a";
   fileType = ".jpg";
@@ -91,8 +92,9 @@ next.addEventListener("click", (e) => {
   if (cardNumber != 83) {
     if (!isTouchDevice) {
       e.ctrlKey ? (cardNumber = addTen(cardNumber)) : cardNumber++;
+    } else {
+      tapTimeNext < 400 ? (cardNumber = addTen(cardNumber)) : cardNumber++;
     }
-    tapTimeNext < 400 ? (cardNumber = addTen(cardNumber)) : cardNumber++;
   }
   cardType = "a";
   fileType = ".jpg";
