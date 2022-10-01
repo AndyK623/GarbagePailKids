@@ -8,6 +8,9 @@ var bVersion = document.getElementById("bVersion");
 var sketch = document.getElementById("sketch");
 var holographic = document.getElementById("holographic");
 var back = document.getElementById("back");
+var backSpan = document.getElementById("backSpan");
+
+var flipped = false;
 
 var cardNumber = 1;
 var cardType = "a";
@@ -27,6 +30,8 @@ var tapTimeNext = 400;
 function checkTransform() {
   if (card.style.transform === "rotate(90deg)") {
     card.style.transform = "";
+    flipped = false;
+    backSpan.textContent = "flip_to_back";
   }
 }
 
@@ -153,15 +158,29 @@ holographic.addEventListener("click", (e) => {
 });
 
 back.addEventListener("click", (e) => {
-  checkTransform();
-  cardType = "";
-  fileType = ".jpg";
-  setCardSrc();
-  if (cardNumber <= 41) {
-    card.style.transform = "rotate(90deg)";
-    if (!screen.orientation.type.includes("landscape")) {
-      setMaxHeight("45vh");
+  if (flipped) {
+    checkTransform();
+    cardType = "a";
+    fileType = ".jpg";
+    setCardSrc();
+    setMaxHeight("75vh");
+
+    backSpan.textContent = "flip_to_back";
+    flipped = false;
+  } else {
+    checkTransform();
+    cardType = "";
+    fileType = ".jpg";
+    setCardSrc();
+    if (cardNumber <= 41) {
+      card.style.transform = "rotate(90deg)";
+      if (!screen.orientation.type.includes("landscape")) {
+        setMaxHeight("45vh");
+      }
     }
+
+    backSpan.textContent = "flip_to_front";
+    flipped = true;
   }
 });
 
