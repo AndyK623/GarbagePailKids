@@ -1,6 +1,7 @@
 const isTouchDevice = "ontouchstart" in document.documentElement;
 
 var card = document.getElementById("card");
+var spinner = document.getElementById("spinner");
 var next = document.getElementById("next");
 var previous = document.getElementById("previous");
 var aVersion = document.getElementById("aVersion");
@@ -36,6 +37,8 @@ function checkTransform() {
 }
 
 function setCardSrc() {
+  card.style.display = "none";
+  spinner.style.display = "grid";
   card.src = basePath + cardNumber + cardType + fileType;
 }
 
@@ -62,6 +65,20 @@ function substractTen(cardNumber) {
 
   return result;
 }
+
+window.onload = function () {
+  if (spinner.style.display === "grid") {
+    card.style.display = "none";
+  }
+};
+
+card.onload = function () {
+  spinner.style.display = "none";
+  card.style.display = "grid";
+};
+
+card.style.display = "none";
+card.src = "img/1a.jpg";
 
 previous.addEventListener("click", (e) => {
   checkTransform();
